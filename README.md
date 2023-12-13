@@ -5,7 +5,8 @@ During major online events like live broadcasts, security teams need a fast and 
 This project demonstrates using AWS Glue crawlers to categorize and structure WAF flow log data and Amazon Athena for querying. Amazon Quicksight is then employed to visualize query results in a dashboard. Once deployed, the dashboard provides traffic visualization similar to the example graphs shown below, empowering security teams with insight into attacks and defense:
 
 # Deployment
-** Step1: install Pre-requisites **
+**Step1: install Pre-requisites**
+
     install the cid-cmd tool using the following Cli `pip3 install --upgrade cid-cmd`
 
 **Step2: AWS WAF Logs Dashboard Data Set Deployment**
@@ -25,7 +26,7 @@ This project demonstrates using AWS Glue crawlers to categorize and structure WA
 Once the Stack is created successfully, you will see the following resources deployed:
 Amazon S3 Bucket, AWS Glue Crawler, AWS Glue Database, Amazon Kinesis Data Stream and Amazon Athena Query (under '**“Saved Queries”** tab to create the view in Athena) and the corresponding AWS IAM Roles and Policies are created successfully.
 
-**Step 3: First AWS WAF Logs activation **
+**Step 3: First AWS WAF Logs activation**
 
 If this the first time you activate the AWS WAF Logs, proceed with the following steps.
  If you have already AWS WAF Logs activated and sent to an S3 bucket, skip these steps and move on to Step 4: AWS WAF logs Already activated and sent to an S3 Bucket 
@@ -39,7 +40,7 @@ If this the first time you activate the AWS WAF Logs, proceed with the following
 
 The AWS WAF Flow logs for that ACL will now be stored in the Amazon S3 you have just created
 
-**Step 4: AWS WAF logs Already activated and sent to an S3 Bucket **
+**Step 4: AWS WAF logs Already activated and sent to an S3 Bucket**
 
 1. Go to AWS Glue, Select the crawler that has been just created by the AWS CloudFormation Template **crawl-aws-waf-logs**.
 2. Under **Data Source**, select the S3 bucket and  hit **Edit**.
@@ -50,7 +51,7 @@ The AWS WAF Flow logs for that ACL will now be stored in the Amazon S3 you have 
 7. Under Permissions Policies, select WAF-GlueCrawlerRolePolicy and change the Reource arn of the S3 bucket with the one where you AWS WAF Logs are stored
 8. Go back to AWS Glue, Under Crawlers, select the Crawlers that has been created with the AWS CloudFormation template and hit Run. It should time few minutes to the crawler to complete.
 
-**Step 4:  Create View in Amazon Athena **
+**Step 4:  Create View in Amazon Athena**
 *Step 4.1 prepare Amazon Athena * 
 If this is the first time you will be using Athena you will need to complete a few setup steps before you are able to create the views needed. If you are already a regular Athena user you can skip these steps and move on to the Step7.2: create the view in Amazon Athena section below. 
 
