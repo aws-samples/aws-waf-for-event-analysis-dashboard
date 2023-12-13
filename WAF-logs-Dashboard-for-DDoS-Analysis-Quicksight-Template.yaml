@@ -1,0 +1,72 @@
+dashboards:
+  AWS WAF LOGS FOR ANTI DDOS:
+    dependsOn:
+      datasets:
+      - waflogs
+    name: AWS WAF Logs For Anti DDoS
+    dashboardId: aws-waf-logs-for-anti-ddos
+    templateId: aws-waf-logs-for-anti-ddos
+    sourceAccountId: '698991684551'
+    region: us-east-1
+datasets:
+  waflogs:
+    data:
+      DataSetId: d0086d23-39a8-4b52-9a6f-66d3673e7029
+      Name: waflogs
+      PhysicalTableMap:
+        7cd4d471-1022-45ef-95ce-ed0d30c11b07:
+          RelationalTable:
+            DataSourceArn: ${athena_datasource_arn}
+            Catalog: AwsDataCatalog
+            Schema: ${athena_database_name}
+            Name: waflogs
+            InputColumns:
+            - Name: clientip
+              Type: STRING
+            - Name: timestamp
+              Type: INTEGER
+            - Name: country
+              Type: STRING
+            - Name: uri
+              Type: STRING
+            - Name: http_method
+              Type: STRING
+            - Name: http_args
+              Type: STRING
+            - Name: http_version
+              Type: STRING
+            - Name: request_id
+              Type: STRING
+            - Name: hearder_value
+              Type: STRING
+            - Name: header_name
+              Type: STRING
+            - Name: webaclid
+              Type: STRING
+      LogicalTableMap:
+        5bee1586-b810-4477-84d8-dce416888eeb:
+          Alias: waflogs
+          DataTransforms:
+          - CastColumnTypeOperation:
+              ColumnName: timestamp
+              NewColumnType: DATETIME
+          - TagColumnOperation:
+              ColumnName: country
+              Tags:
+              - ColumnGeographicRole: COUNTRY
+          - ProjectOperation:
+              ProjectedColumns:
+              - clientip
+              - timestamp
+              - country
+              - uri
+              - http_method
+              - http_args
+              - http_version
+              - request_id
+              - hearder_value
+              - header_name
+              - webaclid
+          Source:
+            PhysicalTableId: 7cd4d471-1022-45ef-95ce-ed0d30c11b07
+      ImportMode: DIRECT_QUERY
