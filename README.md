@@ -97,6 +97,7 @@ We will be using the **WAF-logs-Dashboard-for-DDoS-Analysis-Quicksight-Template.
 1. Open your favorite terminal, go where you saved AWS-WAF-Logs-For-Anti-DDoS.yaml and run the following cli:
 
 `cid-cmd deploy —resources ./AWS-WAF-Logs-For-Anti-DDoS.yaml`
+
 2. during the creation you will be prompted to select: 
 [dashboard-id] Please select dashboard to install: 
 Select aws-waf-logs-for-anti-ddos
