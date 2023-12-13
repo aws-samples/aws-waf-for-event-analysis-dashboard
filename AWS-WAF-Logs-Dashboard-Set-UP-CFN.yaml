@@ -6,20 +6,6 @@ Parameters:
     Description: Enter S3 Bucket Name with the prefix aws-waf-logs
     Type: String
 Resources:
-  waflogsbucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Ref 'S3BucketName'
-      AccessControl: Private
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
-        BlockPublicPolicy: true
-        IgnorePublicAcls: true
-        RestrictPublicBuckets: true
   wafDatabase:
     Type: 'AWS::Glue::Database'
     Properties:
@@ -34,7 +20,7 @@ Resources:
       DatabaseName: !Ref wafDatabase
       Targets:
         S3Targets:
-          - Path: !Sub 's3://${waflogsbucket}/AWSLogs/'
+          - Path: !Sub 's3://${S3BucketName}/AWSLogs/'
       Schedule:
         ScheduleExpression: cron(0 */1 * * ? *)
   waflogsGlueCrawlerRole:
@@ -62,13 +48,13 @@ Resources:
                   - 's3:ListBucket'
                   - 's3:GetObject'
                 Resource:
-                  - !Sub 'arn:aws:s3:::${waflogsbucket}*'
+                  - !Sub 'arn:aws:s3:::${S3BucketName}*'
               - Effect: Allow
                 Action:
                   - 's3:PutObject'
                   - 's3:GetObject'
                 Resource:
-                  - !Sub 'arn:aws:s3:::${waflogsbucket}*'
+                  - !Sub 'arn:aws:s3:::${S3BucketName}*'
   waflogsathenaworkgroup:
     Type: 'AWS::Athena::WorkGroup'
     Properties:
