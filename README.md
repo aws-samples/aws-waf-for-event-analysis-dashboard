@@ -52,7 +52,9 @@ The AWS WAF Flow logs for that ACL will now be stored in the Amazon S3 you have 
 8. Go back to AWS Glue, Under Crawlers, select the Crawlers that has been created with the AWS CloudFormation template and hit Run. It should time few minutes to the crawler to complete.
 
 **Step 4:  Create View in Amazon Athena**
+
 *Step 4.1 prepare Amazon Athena * 
+
 If this is the first time you will be using Athena you will need to complete a few setup steps before you are able to create the views needed. If you are already a regular Athena user you can skip these steps and move on to the Step7.2: create the view in Amazon Athena section below. 
 
 1. From the services list, choose S3
