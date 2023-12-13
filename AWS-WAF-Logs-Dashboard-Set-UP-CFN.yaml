@@ -1,0 +1,94 @@
+   AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation template for setting up WAF Logs Dashbaord for DDoS Analysis 
+Parameters:
+  S3BucketName:
+    Description: Enter S3 Bucket Name with the prefix aws-waf-logs
+    Type: String
+Resources:
+  waflogsbucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref 'S3BucketName'
+      AccessControl: Private
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  wafDatabase:
+    Type: 'AWS::Glue::Database'
+    Properties:
+      CatalogId: !Ref 'AWS::AccountId'
+      DatabaseInput:
+        Name: waflogsdb
+  waflogsGlueCrawler:
+    Type: 'AWS::Glue::Crawler'
+    Properties:
+      Name: crawl-aws-waf-logs
+      Role: !Ref waflogsGlueCrawlerRole
+      DatabaseName: !Ref wafDatabase
+      Targets:
+        S3Targets:
+          - Path: !Sub 's3://${waflogsbucket}/AWSLogs/'
+      Schedule:
+        ScheduleExpression: cron(0 */1 * * ? *)
+  waflogsGlueCrawlerRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - glue.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSGlueServiceRole'
+      Path: /
+      Policies:
+        - PolicyName: WAF-GlueCrawlerRolePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:ListBucket'
+                  - 's3:GetObject'
+                Resource:
+                  - !Sub 'arn:aws:s3:::${waflogsbucket}*'
+              - Effect: Allow
+                Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                Resource:
+                  - !Sub 'arn:aws:s3:::${waflogsbucket}*'
+  waflogsathenaworkgroup:
+    Type: 'AWS::Athena::WorkGroup'
+    Properties:
+      Name: waf-logs-athena
+      State: ENABLED
+      Tags:
+        - Key: QuicksightDataSource
+          Value: 'true'
+  waflogsAthenaView:
+    Type: 'AWS::Athena::NamedQuery'
+    Properties:
+      Name: aws_waf_insights_logging
+      Description: AWS WAF Logging dashboard summary view
+      Database: !Ref wafDatabase
+      QueryString: >
+        CREATE OR REPLACE VIEW "waflogs" AS  SELECT httprequest.clientip
+        "clientip" , "timestamp" "timestamp", httprequest.country "country",
+        httprequest.uri "uri", httprequest.httpmethod "http_method",
+        httprequest.args "http_args", httprequest.httpversion "http_version",
+        httprequest.requestid "request_id", header.value "hearder_value",
+        header.name "header_name", "webaclid"  FROM
+        "AwsDataCatalog"."waflogsdb"."awslogs",UNNEST(httprequest.headers) t (header)
+      WorkGroup: !Ref waflogsathenaworkgroup
