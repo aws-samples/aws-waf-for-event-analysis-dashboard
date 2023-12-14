@@ -33,7 +33,7 @@ AWS Glue Crawler, AWS Glue Database and  Amazon Athena Query (under '**“Saved 
 
 **Step 3:  Create View in Amazon Athena**
 
-*Step 3.1 prepare Amazon Athena * 
+**Step 3.1 prepare Amazon Athena  **
 
 If this is the first time you will be using Athena you will need to complete a few setup steps before you are able to create the views needed. If you are already a regular Athena user you can skip these steps and move on to the _Step3.2: create the view in Amazon Athena section below_. 
 
@@ -50,7 +50,7 @@ If this is the first time you will be using Athena you will need to complete a f
 7.  Confirm your Query result location is configured with an S3 bucket path. If not configured, continue to setting up by clicking Edit workgroup
 8.  Add the S3 bucket path you have selected for your Query result location and click save 
 
-*Step 3.2 create the view in Amazon Athena *
+**Step 3.2 create the view in Amazon Athena** 
 
 We will use  saved query created as part of the AWS CloudFormation stack to create a view that will be used for the dashboard:
 
