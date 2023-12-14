@@ -1,9 +1,9 @@
-   AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  AWS CloudFormation template for setting up WAF Logs Dashbaord for DDoS Analysis 
+  AWS CloudFormation template for setting up resources for WAF Logs Dashboard for Events Analysis
 Parameters:
   S3BucketName:
-    Description: Enter S3 Bucket Name with the prefix aws-waf-logs
+    Description: Enter S3 Bucket Name with the prefix aws-waf-logs where you store you WAF logs
     Type: String
 Resources:
   wafDatabase:
@@ -70,11 +70,11 @@ Resources:
       Description: AWS WAF Logging dashboard summary view
       Database: !Ref wafDatabase
       QueryString: >
-        CREATE OR REPLACE VIEW "waflogs" AS  SELECT httprequest.clientip
-        "clientip" , "timestamp" "timestamp", httprequest.country "country",
-        httprequest.uri "uri", httprequest.httpmethod "http_method",
-        httprequest.args "http_args", httprequest.httpversion "http_version",
-        httprequest.requestid "request_id", header.value "hearder_value",
-        header.name "header_name", "webaclid"  FROM
-        "AwsDataCatalog"."waflogsdb"."awslogs",UNNEST(httprequest.headers) t (header)
+        CREATE OR REPLACE VIEW "waf_logs_antiddos_view" AS SELECT  "timestamp", formatversion, webaclid, terminatingruleid, terminatingruletype,
+        action, ja3fingerprint, httpsourcename, httpsourceid, HTTPREQUEST.clientip clientip, HTTPREQUEST.country country, HTTPREQUEST.httpMethod httpMethod,
+        httprequest.uri uri, httprequest.args http_args, httprequest.httpversion http_version, httprequest.requestid request_id, header.value "hearder_value", 
+        header.name "header_name", partition_0 "Account_ID", partition_4 "Year", partition_5 "month", partition_6 "day", partition_2 "protected_resource_type",
+        partition_7 "hour", partition_8 "minute"
+        FROM "AwsDataCatalog"."waflogsdb"."awslogs", UNNEST(httprequest.headers) t (header)
+        WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL '7' MONTH))
       WorkGroup: !Ref waflogsathenaworkgroup
