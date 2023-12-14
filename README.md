@@ -91,7 +91,7 @@ after a successful run , the output will be :
 
 #######
 ####### Congratulations!
-####### AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1 is available at: https://us-east-1.quicksight.aws.amazon.com/sn/dashboards/aws-waf-logs-dashboard-for-event-analysis-v1
+####### AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1 is available at: _[https://[region].quicksight.aws.amazon.com/sn/dashboards/aws-waf-logs-dashboard-for-event-analysis-v1]_
 #######
 
 You can now start analysing your traffic pattern.
