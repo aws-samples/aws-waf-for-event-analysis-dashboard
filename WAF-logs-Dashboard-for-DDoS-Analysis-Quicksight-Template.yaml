@@ -1,35 +1,51 @@
 dashboards:
-  AWS WAF LOGS FOR ANTI DDOS:
+  AWS-WAF-LOGS-DASHBOARD-FOR-EVENT-ANALYSIS-V1:
     dependsOn:
       datasets:
-      - waflogs
-    name: AWS WAF Logs For Anti DDoS
-    dashboardId: aws-waf-logs-for-anti-ddos
-    templateId: aws-waf-logs-for-anti-ddos
+      - waf_logs_antiddos_least_fields_v2
+    name: AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1
+    dashboardId: aws-waf-logs-dashboard-for-event-analysis-v1
+    templateId: aws-waf-logs-dashboard-for-event-analysis-v1
     sourceAccountId: '698991684551'
     region: us-east-1
 datasets:
-  waflogs:
+  waf_logs_antiddos_least_fields_v2:
     data:
-      DataSetId: d0086d23-39a8-4b52-9a6f-66d3673e7029
-      Name: waflogs
+      DataSetId: 612def5a-b103-4e4d-8c04-a027e6fbe124
+      Name: waf_logs_antiddos_least_fields_v2
       PhysicalTableMap:
-        7cd4d471-1022-45ef-95ce-ed0d30c11b07:
+        1201930c-cc9b-491d-8df9-b5be07a11b3b:
           RelationalTable:
             DataSourceArn: ${athena_datasource_arn}
             Catalog: AwsDataCatalog
             Schema: ${athena_database_name}
-            Name: waflogs
+            Name: waf_logs_antiddos_view
             InputColumns:
-            - Name: clientip
-              Type: STRING
             - Name: timestamp
               Type: INTEGER
+            - Name: formatversion
+              Type: INTEGER
+            - Name: webaclid
+              Type: STRING
+            - Name: terminatingruleid
+              Type: STRING
+            - Name: terminatingruletype
+              Type: STRING
+            - Name: action
+              Type: STRING
+            - Name: ja3fingerprint
+              Type: STRING
+            - Name: httpsourcename
+              Type: STRING
+            - Name: httpsourceid
+              Type: STRING
+            - Name: clientip
+              Type: STRING
             - Name: country
               Type: STRING
-            - Name: uri
+            - Name: httpmethod
               Type: STRING
-            - Name: http_method
+            - Name: uri
               Type: STRING
             - Name: http_args
               Type: STRING
@@ -41,11 +57,23 @@ datasets:
               Type: STRING
             - Name: header_name
               Type: STRING
-            - Name: webaclid
+            - Name: account_id
+              Type: STRING
+            - Name: year
+              Type: STRING
+            - Name: month
+              Type: STRING
+            - Name: day
+              Type: STRING
+            - Name: protected_resource_type
+              Type: STRING
+            - Name: hour
+              Type: STRING
+            - Name: minute
               Type: STRING
       LogicalTableMap:
-        5bee1586-b810-4477-84d8-dce416888eeb:
-          Alias: waflogs
+        a286b2f7-8acf-4e80-8034-93bedf5e8aa7:
+          Alias: waf_logs_antiddos_least_fields_v2
           DataTransforms:
           - CastColumnTypeOperation:
               ColumnName: timestamp
@@ -56,17 +84,68 @@ datasets:
               - ColumnGeographicRole: COUNTRY
           - ProjectOperation:
               ProjectedColumns:
-              - clientip
               - timestamp
+              - formatversion
+              - webaclid
+              - terminatingruleid
+              - terminatingruletype
+              - action
+              - ja3fingerprint
+              - httpsourcename
+              - httpsourceid
+              - clientip
               - country
+              - httpmethod
               - uri
-              - http_method
               - http_args
               - http_version
               - request_id
               - hearder_value
               - header_name
-              - webaclid
+              - account_id
+              - year
+              - month
+              - day
+              - protected_resource_type
+              - hour
+              - minute
           Source:
-            PhysicalTableId: 7cd4d471-1022-45ef-95ce-ed0d30c11b07
+            PhysicalTableId: 1201930c-cc9b-491d-8df9-b5be07a11b3b
       ImportMode: DIRECT_QUERY
+    dependsOn:
+      views:
+      - waf_logs_antiddos_view
+views:
+  waf_logs_antiddos_least_fields_v2:
+    data: |-
+      CREATE OR REPLACE VIEW "waf_logs_antiddos_view".waf_logs_antiddos_view AS
+      SELECT
+        "timestamp"
+      , formatversion
+      , webaclid
+      , terminatingruleid
+      , terminatingruletype
+      , action
+      , ja3fingerprint
+      , httpsourcename
+      , httpsourceid
+      , HTTPREQUEST.clientip clientip
+      , HTTPREQUEST.country country
+      , HTTPREQUEST.httpMethod httpMethod
+      , httprequest.uri uri
+      , httprequest.args http_args
+      , httprequest.httpversion http_version
+      , httprequest.requestid request_id
+      , header.value "hearder_value"
+      , header.name "header_name"
+      , partition_0 "Account_ID"
+      , partition_4 "Year"
+      , partition_5 "month"
+      , partition_6 "day"
+      , partition_2 "protected_resource_type"
+      , partition_7 "hour"
+      , partition_8 "minute"
+      FROM
+        "AwsDataCatalog"."waflogsdb"."awslogs"
+      , UNNEST(httprequest.headers) t (header)
+      WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL  '7' MONTH))
