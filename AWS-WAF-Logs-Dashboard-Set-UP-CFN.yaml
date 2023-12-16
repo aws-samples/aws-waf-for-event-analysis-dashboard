@@ -46,35 +46,10 @@ Resources:
               - Effect: Allow
                 Action:
                   - 's3:ListBucket'
-                  - 's3:GetObject'
                 Resource:
-                  - !Sub 'arn:aws:s3:::${S3BucketName}*'
+                  - !Sub 'arn:aws:s3:::${S3BucketName}'
               - Effect: Allow
                 Action:
-                  - 's3:PutObject'
                   - 's3:GetObject'
                 Resource:
-                  - !Sub 'arn:aws:s3:::${S3BucketName}*'
-  waflogsathenaworkgroup:
-    Type: 'AWS::Athena::WorkGroup'
-    Properties:
-      Name: waf-logs-athena
-      State: ENABLED
-      Tags:
-        - Key: QuicksightDataSource
-          Value: 'true'
-  waflogsAthenaView:
-    Type: 'AWS::Athena::NamedQuery'
-    Properties:
-      Name: aws_waf_insights_logging
-      Description: AWS WAF Logging dashboard summary view
-      Database: !Ref wafDatabase
-      QueryString: >
-        CREATE OR REPLACE VIEW "waf_logs_antiddos_view" AS SELECT  "timestamp", formatversion, webaclid, terminatingruleid, terminatingruletype,
-        action, ja3fingerprint, httpsourcename, httpsourceid, HTTPREQUEST.clientip clientip, HTTPREQUEST.country country, HTTPREQUEST.httpMethod httpMethod,
-        httprequest.uri uri, httprequest.args http_args, httprequest.httpversion http_version, httprequest.requestid request_id, header.value "hearder_value", 
-        header.name "header_name", partition_0 "Account_ID", partition_4 "Year", partition_5 "month", partition_6 "day", partition_2 "protected_resource_type",
-        partition_7 "hour", partition_8 "minute"
-        FROM "AwsDataCatalog"."waflogsdb"."awslogs", UNNEST(httprequest.headers) t (header)
-        WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL '7' MONTH))
-      WorkGroup: !Ref waflogsathenaworkgroup
+                  - !Sub 'arn:aws:s3:::${S3BucketName}/*'
