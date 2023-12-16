@@ -116,9 +116,9 @@ datasets:
       views:
       - waf_logs_antiddos_view
 views:
-  waf_logs_antiddos_least_fields_v2:
+  waf_logs_antiddos_view:
     data: |-
-      CREATE OR REPLACE VIEW "waf_logs_antiddos_view".waf_logs_antiddos_view AS
+      CREATE OR REPLACE VIEW ${athena_database_name}.waf_logs_antiddos_view AS
       SELECT
         "timestamp"
       , formatversion
@@ -146,6 +146,6 @@ views:
       , partition_7 "hour"
       , partition_8 "minute"
       FROM
-        "AwsDataCatalog"."waflogsdb"."awslogs"
+        awslogs
       , UNNEST(httprequest.headers) t (header)
       WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL  '7' MONTH))
