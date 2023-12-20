@@ -1,11 +1,11 @@
 dashboards:
-  AWS-WAF-LOGS-DASHBOARD-FOR-EVENT-ANALYSIS-V1:
+  AWS-WAF-FOR-EVENT-ANALYSIS:
     dependsOn:
       datasets:
       - waf_logs_antiddos_least_fields_v2
-    name: AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1
-    dashboardId: aws-waf-logs-dashboard-for-event-analysis-v1
-    templateId: aws-waf-logs-dashboard-for-event-analysis-v1
+    name: AWS-WAF-for-Event-Analysis
+    dashboardId: aws-waf-dashboard-for-event-analysis
+    templateId: aws-waf-for-event-analysis
     sourceAccountId: '698991684551'
     region: us-east-1
 datasets:
@@ -21,18 +21,22 @@ datasets:
             Schema: ${athena_database_name}
             Name: waf_logs_antiddos_view
             InputColumns:
+            - Name: account_id
+              Type: STRING
+            - Name: protected_resource_type
+              Type: STRING
+            - Name: year
+              Type: STRING
+            - Name: month
+              Type: STRING
+            - Name: day
+              Type: STRING
+            - Name: hour
+              Type: STRING
+            - Name: minute
+              Type: STRING
             - Name: timestamp
               Type: INTEGER
-            - Name: formatversion
-              Type: INTEGER
-            - Name: webaclid
-              Type: STRING
-            - Name: terminatingruleid
-              Type: STRING
-            - Name: terminatingruletype
-              Type: STRING
-            - Name: action
-              Type: STRING
             - Name: ja3fingerprint
               Type: STRING
             - Name: httpsourcename
@@ -57,20 +61,6 @@ datasets:
               Type: STRING
             - Name: header_name
               Type: STRING
-            - Name: account_id
-              Type: STRING
-            - Name: year
-              Type: STRING
-            - Name: month
-              Type: STRING
-            - Name: day
-              Type: STRING
-            - Name: protected_resource_type
-              Type: STRING
-            - Name: hour
-              Type: STRING
-            - Name: minute
-              Type: STRING
       LogicalTableMap:
         a286b2f7-8acf-4e80-8034-93bedf5e8aa7:
           Alias: waf_logs_antiddos_least_fields_v2
@@ -84,12 +74,14 @@ datasets:
               - ColumnGeographicRole: COUNTRY
           - ProjectOperation:
               ProjectedColumns:
+              - account_id
+              - protected_resource_type
+              - year
+              - month
+              - day
+              - hour
+              - minute
               - timestamp
-              - formatversion
-              - webaclid
-              - terminatingruleid
-              - terminatingruletype
-              - action
               - ja3fingerprint
               - httpsourcename
               - httpsourceid
@@ -102,13 +94,6 @@ datasets:
               - request_id
               - hearder_value
               - header_name
-              - account_id
-              - year
-              - month
-              - day
-              - protected_resource_type
-              - hour
-              - minute
           Source:
             PhysicalTableId: 1201930c-cc9b-491d-8df9-b5be07a11b3b
       ImportMode: DIRECT_QUERY
@@ -120,12 +105,14 @@ views:
     data: |-
       CREATE OR REPLACE VIEW ${athena_database_name}.waf_logs_antiddos_view AS
       SELECT
-        "timestamp"
-      , formatversion
-      , webaclid
-      , terminatingruleid
-      , terminatingruletype
-      , action
+        partition_0 "Account_ID"
+      , partition_2 "protected_resource_type"
+      , partition_4 "Year"
+      , partition_5 "month"
+      , partition_6 "day"
+      , partition_7 "hour"
+      , partition_8 "minute"
+      , "timestamp"
       , ja3fingerprint
       , httpsourcename
       , httpsourceid
@@ -138,14 +125,7 @@ views:
       , httprequest.requestid request_id
       , header.value "hearder_value"
       , header.name "header_name"
-      , partition_0 "Account_ID"
-      , partition_4 "Year"
-      , partition_5 "month"
-      , partition_6 "day"
-      , partition_2 "protected_resource_type"
-      , partition_7 "hour"
-      , partition_8 "minute"
       FROM
         awslogs
       , UNNEST(httprequest.headers) t (header)
-      WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL  '7' MONTH))
+      WHERE (CAST("concat"("partition_4", '-', "partition_5", '-01') AS date) >= ("date_trunc"('month', current_date) - INTERVAL  '3' MONTH))
