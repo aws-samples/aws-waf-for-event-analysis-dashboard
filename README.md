@@ -52,7 +52,7 @@ We will be using the **AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml** template
 
 1. Open your favorite terminal, under the directory where you saved AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml template and run the following cli:
 
-`cid-cmd deploy —resources ./AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml`
+`cid-cmd deploy --resources ./AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml`
 
 2. during the creation you will be prompted to select: 
 [dashboard-id] Please select dashboard to install: 
