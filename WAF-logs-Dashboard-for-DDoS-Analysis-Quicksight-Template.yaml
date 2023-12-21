@@ -561,38 +561,44 @@ dashboards:
             ValueWhenUnsetOption: RECOMMENDED_VALUE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-11-27 04:00:00+04:00
+            RollingDate:
+              Expression: addDateTime(-1, 'DD', truncDate('DD', now()))
+            StaticValues: []
           Name: BaseLineStart
           TimeGranularity: MINUTE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-11-28 04:00:00+04:00
+            RollingDate:
+              Expression: addDateTime(-1, 'SS', truncDate('DD', now()))
+            StaticValues: []
           Name: BaseLineEnd
           TimeGranularity: MINUTE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-12-12 04:00:00+04:00
+            RollingDate:
+              Expression: truncDate('DD', now())
+            StaticValues: []
           Name: EventStart
           TimeGranularity: MINUTE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-12-14 04:00:00+04:00
+            RollingDate:
+              Expression: addDateTime(-1, 'SS', addDateTime(1, 'DD', truncDate('DD', now())))
+            StaticValues: []
           Name: EventEnd
           TimeGranularity: MINUTE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-11-19 04:00:00+04:00
+            RollingDate:
+              Expression: truncDate('MM', now())
+            StaticValues: []
           Name: DataToAnalyzeStart
           TimeGranularity: MINUTE
       - DateTimeParameterDeclaration:
           DefaultValues:
-            StaticValues:
-            - 2023-12-17 04:00:00+04:00
+            RollingDate:
+              Expression: addDateTime(-1, 'SS', addDateTime(1, 'MM', truncDate('MM', now())))
+            StaticValues: []
           Name: DataToAnalyzeEnd
           TimeGranularity: MINUTE
       Sheets:
