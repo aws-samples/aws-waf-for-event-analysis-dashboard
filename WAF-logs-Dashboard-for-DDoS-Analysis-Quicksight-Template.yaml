@@ -235,54 +235,6 @@ dashboards:
               - 707522af-7cc8-4831-bf16-cadc910bfd93
         Status: ENABLED
       - CrossDataset: SINGLE_DATASET
-        FilterGroupId: 40fd780e-f7b0-4e8f-a925-9fbce54209a3
-        Filters:
-        - TimeRangeFilter:
-            Column:
-              ColumnName: date_range
-              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-            FilterId: 651778f4-40a7-4142-a816-89b51f36ab94
-            IncludeMaximum: true
-            IncludeMinimum: true
-            NullOption: NON_NULLS_ONLY
-            RangeMaximumValue:
-              Parameter: BaseLineEnd
-            RangeMinimumValue:
-              Parameter: BaseLineStart
-            TimeGranularity: DAY
-        ScopeConfiguration:
-          SelectedSheets:
-            SheetVisualScopingConfigurations:
-            - Scope: SELECTED_VISUALS
-              SheetId: 43b25c81-6789-49bd-bf7a-332b34aeefc9
-              VisualIds:
-              - f610f253-ecdd-4a90-ae9f-1b7ba4a88750
-        Status: ENABLED
-      - CrossDataset: SINGLE_DATASET
-        FilterGroupId: 7dce040b-2b34-4d84-8422-975277b62c78
-        Filters:
-        - TimeRangeFilter:
-            Column:
-              ColumnName: date_range
-              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-            FilterId: e2badde3-49f7-4c57-9186-d89ad8e556ba
-            IncludeMaximum: true
-            IncludeMinimum: true
-            NullOption: NON_NULLS_ONLY
-            RangeMaximumValue:
-              Parameter: EventEnd
-            RangeMinimumValue:
-              Parameter: EventStart
-            TimeGranularity: DAY
-        ScopeConfiguration:
-          SelectedSheets:
-            SheetVisualScopingConfigurations:
-            - Scope: SELECTED_VISUALS
-              SheetId: 43b25c81-6789-49bd-bf7a-332b34aeefc9
-              VisualIds:
-              - a41ddd59-da43-48ce-8392-9e7f3785291f
-        Status: ENABLED
-      - CrossDataset: SINGLE_DATASET
         FilterGroupId: 228b4214-2b5a-412f-b4e5-03d5314f68a6
         Filters:
         - TimeRangeFilter:
@@ -536,6 +488,80 @@ dashboards:
             - Scope: ALL_VISUALS
               SheetId: 84653b0c-13fc-4cf6-bef0-bbb1f840c6b7
         Status: ENABLED
+      - CrossDataset: SINGLE_DATASET
+        FilterGroupId: c39db926-bfb8-4a31-a71e-314d68988fc6
+        Filters:
+        - CategoryFilter:
+            Column:
+              ColumnName: action
+              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+            Configuration:
+              FilterListConfiguration:
+                CategoryValues:
+                - ALLOW
+                MatchOperator: CONTAINS
+            FilterId: ca2de50d-2162-4f83-b0d5-654853182cfb
+        ScopeConfiguration:
+          SelectedSheets:
+            SheetVisualScopingConfigurations:
+            - Scope: ALL_VISUALS
+              SheetId: f55c69b0-fdc6-4525-a2ae-ad14e397f41b
+        Status: ENABLED
+      - CrossDataset: SINGLE_DATASET
+        FilterGroupId: 144a65b0-e4f1-456d-9bb7-f01bd41e60f7
+        Filters:
+        - CategoryFilter:
+            Column:
+              ColumnName: action
+              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+            Configuration:
+              FilterListConfiguration:
+                CategoryValues:
+                - ALLOW
+                MatchOperator: CONTAINS
+            FilterId: 7cb9058d-6306-4f13-9f5f-940daedfdf04
+        ScopeConfiguration:
+          SelectedSheets:
+            SheetVisualScopingConfigurations:
+            - Scope: ALL_VISUALS
+              SheetId: e5f34929-f856-45df-a4bd-25ffb3a7fb66
+        Status: ENABLED
+      - CrossDataset: SINGLE_DATASET
+        FilterGroupId: 375ec063-c6e8-443c-aeb6-968776964409
+        Filters:
+        - CategoryFilter:
+            Column:
+              ColumnName: action
+              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+            Configuration:
+              FilterListConfiguration:
+                MatchOperator: CONTAINS
+                SelectAllOptions: FILTER_ALL_VALUES
+            FilterId: 4045e61e-aa55-4105-933d-ed696d392835
+        ScopeConfiguration:
+          SelectedSheets:
+            SheetVisualScopingConfigurations:
+            - Scope: ALL_VISUALS
+              SheetId: 43b25c81-6789-49bd-bf7a-332b34aeefc9
+        Status: ENABLED
+      - CrossDataset: SINGLE_DATASET
+        FilterGroupId: 2f8a2324-dd0d-4453-8cf2-1fa16580f344
+        Filters:
+        - CategoryFilter:
+            Column:
+              ColumnName: action
+              DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+            Configuration:
+              FilterListConfiguration:
+                MatchOperator: CONTAINS
+                SelectAllOptions: FILTER_ALL_VALUES
+            FilterId: a88bc0bc-5702-4104-abd6-4a7de5c84e46
+        ScopeConfiguration:
+          SelectedSheets:
+            SheetVisualScopingConfigurations:
+            - Scope: ALL_VISUALS
+              SheetId: 84653b0c-13fc-4cf6-bef0-bbb1f840c6b7
+        Status: ENABLED
       ParameterDeclarations:
       - StringParameterDeclaration:
           DefaultValues:
@@ -612,6 +638,14 @@ dashboards:
             SourceFilterId: eafb96ab-b609-4e0e-ad61-9a1c659d5be1
             Title: httpsourcename equals
             Type: MULTI_SELECT
+        - Dropdown:
+            DisplayOptions:
+              SelectAllOptions:
+                Visibility: VISIBLE
+            FilterControlId: 0922ecff-8df7-408e-b75e-7b2894d2bcb1
+            SourceFilterId: ca2de50d-2162-4f83-b0d5-654853182cfb
+            Title: action equals
+            Type: MULTI_SELECT
         Layouts:
         - Configuration:
             GridLayout:
@@ -648,50 +682,6 @@ dashboards:
                 RowSpan: 6
         Name: WAF-Logs-Dashboard-for-Event-Analysis
         ParameterControls:
-        - DateTimePicker:
-            DisplayOptions:
-              DateTimeFormat: YYYY/MM/DD HH:mm:ss
-              TitleOptions:
-                FontConfiguration:
-                  FontSize:
-                    Relative: MEDIUM
-                Visibility: VISIBLE
-            ParameterControlId: 00ffe466-e9f0-41f6-a392-e9afc174a4ad
-            SourceParameterName: BaseLineStart
-            Title: BaseLine Start
-        - DateTimePicker:
-            DisplayOptions:
-              DateTimeFormat: YYYY/MM/DD HH:mm:ss
-              TitleOptions:
-                FontConfiguration:
-                  FontSize:
-                    Relative: MEDIUM
-                Visibility: VISIBLE
-            ParameterControlId: f4613d56-7cc5-415e-8648-52f175b3fc5d
-            SourceParameterName: BaseLineEnd
-            Title: BaseLine End
-        - DateTimePicker:
-            DisplayOptions:
-              DateTimeFormat: YYYY/MM/DD HH:mm:ss
-              TitleOptions:
-                FontConfiguration:
-                  FontSize:
-                    Relative: MEDIUM
-                Visibility: VISIBLE
-            ParameterControlId: 0a001f4a-ab1d-418e-8a41-6ab8a6bc0e1f
-            SourceParameterName: EventStart
-            Title: Event Start
-        - DateTimePicker:
-            DisplayOptions:
-              DateTimeFormat: YYYY/MM/DD HH:mm:ss
-              TitleOptions:
-                FontConfiguration:
-                  FontSize:
-                    Relative: MEDIUM
-                Visibility: VISIBLE
-            ParameterControlId: 0b885115-9d96-478b-b2e2-d6b3dce11529
-            SourceParameterName: EventEnd
-            Title: Event End
         - DateTimePicker:
             DisplayOptions:
               DateTimeFormat: YYYY/MM/DD HH:mm:ss
@@ -747,30 +737,6 @@ dashboards:
                 ElementType: PARAMETER_CONTROL
                 RowIndex: 0
                 RowSpan: 1
-              - ColumnIndex: 4
-                ColumnSpan: 2
-                ElementId: 00ffe466-e9f0-41f6-a392-e9afc174a4ad
-                ElementType: PARAMETER_CONTROL
-                RowIndex: 0
-                RowSpan: 1
-              - ColumnIndex: 6
-                ColumnSpan: 2
-                ElementId: f4613d56-7cc5-415e-8648-52f175b3fc5d
-                ElementType: PARAMETER_CONTROL
-                RowIndex: 0
-                RowSpan: 1
-              - ColumnIndex: 8
-                ColumnSpan: 2
-                ElementId: 0a001f4a-ab1d-418e-8a41-6ab8a6bc0e1f
-                ElementType: PARAMETER_CONTROL
-                RowIndex: 0
-                RowSpan: 1
-              - ColumnIndex: 10
-                ColumnSpan: 2
-                ElementId: 0b885115-9d96-478b-b2e2-d6b3dce11529
-                ElementType: PARAMETER_CONTROL
-                RowIndex: 0
-                RowSpan: 1
               - ColumnIndex: 0
                 ColumnSpan: 2
                 ElementId: 500c9d82-e04d-431d-8dc9-dee0107ec0e7
@@ -779,6 +745,10 @@ dashboards:
                 RowSpan: 1
               - ColumnSpan: 2
                 ElementId: d27bbc26-3627-4aad-8b6f-baaf2396c959
+                ElementType: FILTER_CONTROL
+                RowSpan: 1
+              - ColumnSpan: 2
+                ElementId: 0922ecff-8df7-408e-b75e-7b2894d2bcb1
                 ElementType: FILTER_CONTROL
                 RowSpan: 1
         SheetId: f55c69b0-fdc6-4525-a2ae-ad14e397f41b
@@ -966,6 +936,14 @@ dashboards:
             SourceFilterId: 5330570c-95dc-4c2e-a9c5-013140c6a358
             Title: httpsourcename equals
             Type: MULTI_SELECT
+        - Dropdown:
+            DisplayOptions:
+              SelectAllOptions:
+                Visibility: VISIBLE
+            FilterControlId: ea2b7b62-a7a1-43bd-b266-711ec96a93e7
+            SourceFilterId: 7cb9058d-6306-4f13-9f5f-940daedfdf04
+            Title: action equals
+            Type: MULTI_SELECT
         Layouts:
         - Configuration:
             GridLayout:
@@ -1099,6 +1077,10 @@ dashboards:
                 RowSpan: 1
               - ColumnSpan: 2
                 ElementId: 55747674-547a-463a-aaeb-86a7a5df6933
+                ElementType: FILTER_CONTROL
+                RowSpan: 1
+              - ColumnSpan: 2
+                ElementId: ea2b7b62-a7a1-43bd-b266-711ec96a93e7
                 ElementType: FILTER_CONTROL
                 RowSpan: 1
         SheetId: e5f34929-f856-45df-a4bd-25ffb3a7fb66
@@ -1385,6 +1367,14 @@ dashboards:
             SourceFilterId: 20ee9ba4-dc37-41c1-938a-0f2045f52b26
             Title: httpsourcename equals
             Type: MULTI_SELECT
+        - Dropdown:
+            DisplayOptions:
+              SelectAllOptions:
+                Visibility: VISIBLE
+            FilterControlId: c17ecb0c-960a-41a6-89e9-c311374aa2d0
+            SourceFilterId: 4045e61e-aa55-4105-933d-ed696d392835
+            Title: action equals
+            Type: MULTI_SELECT
         Layouts:
         - Configuration:
             GridLayout:
@@ -1410,18 +1400,6 @@ dashboards:
                 ElementId: 707522af-7cc8-4831-bf16-cadc910bfd93
                 ElementType: VISUAL
                 RowIndex: 4
-                RowSpan: 7
-              - ColumnIndex: 0
-                ColumnSpan: 13
-                ElementId: f610f253-ecdd-4a90-ae9f-1b7ba4a88750
-                ElementType: VISUAL
-                RowIndex: 11
-                RowSpan: 7
-              - ColumnIndex: 13
-                ColumnSpan: 13
-                ElementId: a41ddd59-da43-48ce-8392-9e7f3785291f
-                ElementType: VISUAL
-                RowIndex: 11
                 RowSpan: 7
               - ColumnIndex: 0
                 ColumnSpan: 13
@@ -1522,6 +1500,10 @@ dashboards:
                 ElementId: b0518d84-c15b-461b-b3c9-4c75140f522d
                 ElementType: FILTER_CONTROL
                 RowSpan: 1
+              - ColumnSpan: 2
+                ElementId: c17ecb0c-960a-41a6-89e9-c311374aa2d0
+                ElementType: FILTER_CONTROL
+                RowSpan: 1
         SheetId: 43b25c81-6789-49bd-bf7a-332b34aeefc9
         TextBoxes:
         - Content: "<text-box>\n  The following sections representes the details of the\
@@ -1550,16 +1532,9 @@ dashboards:
                   Visibility: VISIBLE
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.1.1702543929750
                   Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.2.1702543931959
-                  Visibility: VISIBLE
               FieldWells:
                 PivotTableAggregatedFieldWells:
-                  Columns:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: clientip
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.2.1702543931959
+                  Columns: []
                   Rows:
                   - CategoricalDimensionField:
                       Column:
@@ -1608,16 +1583,9 @@ dashboards:
                   Visibility: VISIBLE
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.1.1702543929750
                   Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.2.1702543931959
-                  Visibility: VISIBLE
               FieldWells:
                 PivotTableAggregatedFieldWells:
-                  Columns:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: clientip
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.2.1702543931959
+                  Columns: []
                   Rows:
                   - CategoricalDimensionField:
                       Column:
@@ -1661,124 +1629,6 @@ dashboards:
             Actions: []
             ChartConfiguration:
               FieldOptions:
-                DataPathOptions: []
-                SelectedFieldOptions:
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702543696709
-                  Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.1.1702543709262
-                  Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543733385
-                  Visibility: VISIBLE
-              FieldWells:
-                PivotTableAggregatedFieldWells:
-                  Columns:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: country
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543733385
-                  Rows:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: uri
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702543696709
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: clientip
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.1.1702543709262
-                  Values: []
-              SortConfiguration:
-                FieldSortOptions: []
-              TableOptions:
-                CellStyle: {}
-                CollapsedRowDimensionsVisibility: HIDDEN
-                ColumnHeaderStyle: {}
-                RowAlternateColorOptions:
-                  Status: DISABLED
-              TotalOptions:
-                ColumnTotalOptions:
-                  Placement: END
-                RowSubtotalOptions:
-                  CustomLabel: <<$aws:subtotalDimension>> Subtotal
-                  MetricHeaderCellStyle: {}
-                  TotalCellStyle: {}
-                  TotalsVisibility: VISIBLE
-                  ValueCellStyle: {}
-                RowTotalOptions:
-                  Placement: AUTO
-            Subtitle:
-              Visibility: VISIBLE
-            Title:
-              FormatText:
-                RichText: "<visual-title>\n  <b>Event :</b>\n  \_Records combined by URI,\
-                  \ Country and Client IP\n</visual-title>"
-              Visibility: VISIBLE
-            VisualId: a41ddd59-da43-48ce-8392-9e7f3785291f
-        - PivotTableVisual:
-            Actions: []
-            ChartConfiguration:
-              FieldOptions:
-                SelectedFieldOptions:
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702543696709
-                  Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.1.1702543709262
-                  Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543733385
-                  Visibility: VISIBLE
-              FieldWells:
-                PivotTableAggregatedFieldWells:
-                  Columns:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: country
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543733385
-                  Rows:
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: uri
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702543696709
-                  - CategoricalDimensionField:
-                      Column:
-                        ColumnName: clientip
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.clientip.1.1702543709262
-                  Values: []
-              SortConfiguration:
-                FieldSortOptions: []
-              TableOptions:
-                CellStyle: {}
-                CollapsedRowDimensionsVisibility: HIDDEN
-                ColumnHeaderStyle: {}
-                RowAlternateColorOptions:
-                  Status: DISABLED
-              TotalOptions:
-                ColumnTotalOptions:
-                  Placement: END
-                RowSubtotalOptions:
-                  CustomLabel: <<$aws:subtotalDimension>> Subtotal
-                  MetricHeaderCellStyle: {}
-                  TotalCellStyle: {}
-                  TotalsVisibility: VISIBLE
-                  ValueCellStyle: {}
-                RowTotalOptions:
-                  Placement: AUTO
-            Subtitle:
-              Visibility: VISIBLE
-            Title:
-              FormatText:
-                RichText: "<visual-title>\n  <b>BaseLine :</b>\n  \_Records combined by\
-                  \ URI, Country and Client IP\n</visual-title>"
-              Visibility: VISIBLE
-            VisualId: f610f253-ecdd-4a90-ae9f-1b7ba4a88750
-        - PivotTableVisual:
-            Actions: []
-            ChartConfiguration:
-              FieldOptions:
-                DataPathOptions: []
                 SelectedFieldOptions:
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702543675900
                   Visibility: VISIBLE
@@ -1834,7 +1684,6 @@ dashboards:
             Actions: []
             ChartConfiguration:
               FieldOptions:
-                DataPathOptions: []
                 SelectedFieldOptions:
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.uri.0.1702546519078
                   Visibility: VISIBLE
@@ -1896,6 +1745,14 @@ dashboards:
             FilterControlId: 565da9e4-8d6d-4c40-9527-b0c22c780015
             SourceFilterId: af3150bb-29d4-44b5-88c1-a8f60b3e9d05
             Title: httpsourcename equals
+            Type: MULTI_SELECT
+        - Dropdown:
+            DisplayOptions:
+              SelectAllOptions:
+                Visibility: VISIBLE
+            FilterControlId: 41f67e83-036a-49c5-a8e2-f3d45d229b06
+            SourceFilterId: a88bc0bc-5702-4104-abd6-4a7de5c84e46
+            Title: action equals
             Type: MULTI_SELECT
         Layouts:
         - Configuration:
@@ -2022,11 +1879,15 @@ dashboards:
                 ElementId: 565da9e4-8d6d-4c40-9527-b0c22c780015
                 ElementType: FILTER_CONTROL
                 RowSpan: 1
+              - ColumnSpan: 2
+                ElementId: 41f67e83-036a-49c5-a8e2-f3d45d229b06
+                ElementType: FILTER_CONTROL
+                RowSpan: 1
         SheetId: 84653b0c-13fc-4cf6-bef0-bbb1f840c6b7
         TextBoxes:
         - Content: |-
             <text-box>
-              The following sections representes the details of  ja3fingerprint and the combination with the country.  The Graphs on the right represent the Event traffic, this to help you compare quickly the traffic pattern between your expected type of traffic and the malicious one. You can set the timestamp of both Basline and Event in the controls files on the top of the current sheet (
+              The following sections representes the details of  ja3fingerprint and the combination with the Header_name and Header_value. This helps to identify any suspicious ja3fingerprint trend.  The Graphs on the right represent the Event traffic, this to help you compare quickly the traffic pattern between your expected type of traffic and the malicious one. You can set the timestamp of both Basline and Event in the controls files on the top of the current sheet (
               <b>BaselineStart, BaselineEnd, EventStart, EventEnd</b>
               ). For more information about AWS WAF logs field, please check this link
               <a href="https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html" target="_blank">https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html</a>
@@ -2038,9 +1899,11 @@ dashboards:
             ChartConfiguration:
               FieldOptions:
                 SelectedFieldOptions:
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.header_name.2.1704791086490
                   Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543826559
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.3.1704791089096
+                  Visibility: VISIBLE
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
                   Visibility: VISIBLE
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.3.1702547032863
                   Visibility: VISIBLE
@@ -2049,15 +1912,20 @@ dashboards:
                   Columns:
                   - CategoricalDimensionField:
                       Column:
-                        ColumnName: country
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543826559
-                  Rows:
-                  - CategoricalDimensionField:
-                      Column:
                         ColumnName: ja3fingerprint
                         DataSetIdentifier: waf_logs_antiddos_least_fields_v2
                       FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                  Rows:
+                  - CategoricalDimensionField:
+                      Column:
+                        ColumnName: header_name
+                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.header_name.2.1704791086490
+                  - CategoricalDimensionField:
+                      Column:
+                        ColumnName: hearder_value
+                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.3.1704791089096
                   Values:
                   - CategoricalMeasureField:
                       AggregationFunction: COUNT
@@ -2089,17 +1957,32 @@ dashboards:
             Title:
               FormatText:
                 RichText: "<visual-title>\n  <b>Event :</b>\n  \_Records combined by Ja3fingerprint,\
-                  \ Client IP and Country\n</visual-title>"
+                  \ Header_name &amp; Header_Value\n</visual-title>"
               Visibility: VISIBLE
             VisualId: 12ea68b7-70c9-4ff8-a1a7-980d3a59d8ac
         - PivotTableVisual:
             Actions: []
             ChartConfiguration:
               FieldOptions:
+                DataPathOptions:
+                - DataPathList:
+                  - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                    FieldValue: 6af33c9e05452609f615c60bfdef7ce7
+                  - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.3.1702547028136
+                    FieldValue: ja3fingerprint
+                  Width: 172px
+                - DataPathList:
+                  - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                    FieldValue: d6da0622ae6a25e8e2467c6549b88c5b
+                  - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.3.1702547028136
+                    FieldValue: ja3fingerprint
+                  Width: 150px
                 SelectedFieldOptions:
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.header_name.2.1704790856200
                   Visibility: VISIBLE
-                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543826559
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.3.1704790882649
+                  Visibility: VISIBLE
+                - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
                   Visibility: VISIBLE
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.3.1702547028136
                   Visibility: VISIBLE
@@ -2108,15 +1991,20 @@ dashboards:
                   Columns:
                   - CategoricalDimensionField:
                       Column:
-                        ColumnName: country
-                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
-                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.country.2.1702543826559
-                  Rows:
-                  - CategoricalDimensionField:
-                      Column:
                         ColumnName: ja3fingerprint
                         DataSetIdentifier: waf_logs_antiddos_least_fields_v2
                       FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.1.1702543810839
+                  Rows:
+                  - CategoricalDimensionField:
+                      Column:
+                        ColumnName: header_name
+                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.header_name.2.1704790856200
+                  - CategoricalDimensionField:
+                      Column:
+                        ColumnName: hearder_value
+                        DataSetIdentifier: waf_logs_antiddos_least_fields_v2
+                      FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.hearder_value.3.1704790882649
                   Values:
                   - CategoricalMeasureField:
                       AggregationFunction: COUNT
@@ -2148,14 +2036,13 @@ dashboards:
             Title:
               FormatText:
                 RichText: "<visual-title>\n  <b>BaseLine :</b>\n  \_Records combined by\
-                  \ Ja3fingerprint, Client IP and Country\n</visual-title>"
+                  \ Ja3fingerprint, Header_name &amp; Header_Value\n</visual-title>"
               Visibility: VISIBLE
             VisualId: c9198fc5-327e-4a0f-8ac2-ffe04afb369f
         - PivotTableVisual:
             Actions: []
             ChartConfiguration:
               FieldOptions:
-                DataPathOptions: []
                 SelectedFieldOptions:
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.0.1702543776683
                   Visibility: VISIBLE
@@ -2208,7 +2095,6 @@ dashboards:
             Actions: []
             ChartConfiguration:
               FieldOptions:
-                DataPathOptions: []
                 SelectedFieldOptions:
                 - FieldId: a286b2f7-8acf-4e80-8034-93bedf5e8aa7.ja3fingerprint.0.1702543776683
                   Visibility: VISIBLE
@@ -2328,6 +2214,10 @@ datasets:
               Type: STRING
             - Name: header_name
               Type: STRING
+            - Name: action
+              Type: STRING
+            - Name: webaclid
+              Type: STRING
       LogicalTableMap:
         a286b2f7-8acf-4e80-8034-93bedf5e8aa7:
           Alias: waf_logs_antiddos_least_fields_v2
@@ -2360,6 +2250,8 @@ datasets:
               - request_id
               - hearder_value
               - header_name
+              - action
+              - webaclid
           Source:
             PhysicalTableId: 1201930c-cc9b-491d-8df9-b5be07a11b3b
       ImportMode: DIRECT_QUERY
@@ -2390,6 +2282,8 @@ views:
       , httprequest.requestid request_id
       , header.value "hearder_value"
       , header.name "header_name"
+      , action
+      , webaclid
       FROM
         awslogs
       , UNNEST(httprequest.headers) t (header)
