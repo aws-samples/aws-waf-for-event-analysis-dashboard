@@ -2,7 +2,30 @@
 
 During major online events like live broadcasts, security teams need a fast and clear understanding of attack patterns and behaviors to distinguish between normal and malicious traffic flows. The solution outlined here allows filtering flow logs by "Client IP", "URI", "Header name", and "Header value" to analyze these fields and pinpoint values specifically associated with attack traffic versus normal traffic. For example, the dashboard can identify the top header values that are atypical for normal usage. The security team can then create an AWS WAF rule to block requests containing these header values, stopping the attack.
  
-This project demonstrates using AWS Glue crawlers to categorize and structure WAF flow log data and Amazon Athena for querying. Amazon Quicksight is then employed to visualize query results in a dashboard. Once deployed, the dashboard provides traffic visualization similar to the example graphs shown in _Images_ folder in under project , empowering security teams with insight into attacks and defense
+This project demonstrates using AWS Glue crawlers to categorize and structure WAF flow log data and Amazon Athena for querying. Amazon Quicksight is then employed to visualize query results in a dashboard. Once deployed, the dashboard provides traffic visualization similar to the example graphs shown in _Images_ folder in under project , empowering security teams with insight into attacks and defense.
+
+**Architecture Principles**
+
+![architecture](/Images/Waf-dashboard-Architecture.png)
+
+The AWS WAF for Event Analysis Dashbaord is made of the following compenents:
+
+1. The AWS WAF will capture WAF flow logs that will be stored in an S3  bucket in your account
+1. AWS Glue crawlers are used to discover schema and store it in the AWS Glue Data Catalog
+1. Amazon Athena is then used for building the view of the WAF Flow logs.
+1. Amazon QuickSight can now query and build visualizations to discover insights in your baseline and during the Event
+
+***Once Deployed:***
+The Amazon Quicksight User will have access to the AWS WAF for Event Analysis Dashbaord which is made of 4 tabs:
+1. 1st Tab: the Overall traffic - To help identify any deviation from the baseline traffic that worths to be analayzed
+1. 2nd Tab: Client IP, Country, HTTP Method Insights and comparaison between Baseline Traffic and Event Traffic
+1. 3rd Tab:  Header Value insights and comparison between Baseline Traffic and Event Traffic
+1. 4th Tab: Ja3fingerprint combined with header_value insights and comparison between Baseline Traffic and Event Traffic
+
+# Included in this project
+
+1. AWS CloudFormation Template to create the AWS Glue crawler which will be used to discover the schema and store it in the AWS Glue Data Catalog
+1. a cid-cmd template to create the Amazon Athena view, the Amazon Quicksight Dataset and the Amazon Quicksight Dashbaord.
 
 # Deployment
 **Step1: install Pre-requisites**
@@ -52,7 +75,7 @@ We will be using the **AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml** template
 
 1. Open your favorite terminal, under the directory where you saved AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml template and run the following cli:
 
-`cid-cmd deploy --resources ./AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml`
+`cid-cmd deploy --resources ./AWS-WAF-Logs-Dashboard-For-Event-Analysis.yaml` 
 
 2. during the creation you will be prompted to select: 
 [dashboard-id] Please select dashboard to install: 
@@ -64,12 +87,12 @@ Select _waflogsdb_
 
 
 after a successful run , the output will be :
-
+```
 #######
 ####### Congratulations!
-####### AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1 is available at: _[https://[region].quicksight.aws.amazon.com/sn/dashboards/aws-waf-logs-dashboard-for-event-analysis-v1]_
+####### AWS-WAF-Logs-Dashboard-For-Event-Analysis-V1 is available at: https://[region].quicksight.aws.amazon.com/sn/dashboards/AWS_WAF_For_Event_Analysis_Dashboard_name
 #######
-
+```
 You can now start analysing your traffic pattern.
 
 
